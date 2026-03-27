@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mutedeworld — Luxury Fashion</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- NAVIGATION -->
+    <nav>
+      <div class="nav-logo">Mutedeworld</div>
+      <ul class="nav-links">
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Collections</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <span class="nav-icon">&#9825;</span>
+        <span class="nav-icon">&#128084;</span>
+        <span class="nav-icon">&#128722;</span>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">New Collection — 2026</p>
+        <h1 class="hero-title">Let the<br /><em>Style</em><br />Speak</h1>
+        <p class="hero-sub">
+          Mutedeworld is an aesthetic gears built for the leaders, thinker, and
+          visionaries who let their actions and their style do the talking.
+        </p>
+        <button
+          class="btn-primary"
+          onclick="
+            document
+              .querySelector('.product-grid')
+              .scrollIntoView({ behavior: 'smooth' })
+          "
+        >
+          Shop Collection
+        </button>
+        <a href="#" class="btn-outline">Our Story</a>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-logo-display">
+          <img src="images/logo1.PNG" alt="Mutedeworld" class="hero-logo-img" />
+        </div>
+    </section>
+
+    <!-- MARQUEE BAR -->
+    <div class="marquee-bar">
+      <span class="marquee-inner">
+        &nbsp;&nbsp;&nbsp; Free Deliveries on Orders Over ₵500 in Accra
+        &nbsp;&bull;&nbsp; New Collections Now Available &nbsp;&bull;&nbsp;
+        Designed with Intention, Worn with Purpose &nbsp;&bull;&nbsp;
+        Mutedeworld &nbsp;&bull;&nbsp; Free Deliveries on Orders Over ₵500 in
+        Accra &nbsp;&bull;&nbsp; New Collections Now Available
+        &nbsp;&bull;&nbsp; Designed with Intention, Worn with Purpose
+        &nbsp;&bull;&nbsp; Mutedeworld &nbsp;&bull;&nbsp;
+      </span>
+    </div>
+
+    <!-- COLLECTION SECTION HEADER -->
+    <div class="section-header">
+      <h2 class="section-title">The Collection</h2>
+    </div>
+
+    <!-- FILTER BUTTONS -->
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter(this, 'all')">
+        All
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'tees')">Tees</button>
+      <button class="filter-btn" onclick="setFilter(this, 'joggers')">
+        Joggers
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'shorts')">
+        Shorts
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'baggy-jeans')">
+        Baggy Jeans
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'socks')">
+        Socks
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'tank-tops')">
+        Tank Tops
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'knit-bodysuit')">
+        Knit Bodysuit
+      </button>
+      <button class="filter-btn" onclick="setFilter(this, 'caps')">Caps</button>
+    </div>
+
+    <!-- PRODUCT GRID — populated by JS -->
+    <div class="product-grid" id="productGrid"></div>
+
+    <!-- BRAND PROMISE -->
+    <div class="promise">
+      <p class="section-eyebrow">The Mutedeworld Promise</p>
+      <h2 class="section-title">Crafted for Eternity</h2>
+      <p class="promise-sub">
+        Every Mutedeworld piece is made in limited quantities, using ethically
+        sourced fabrics and age-old tailoring techniques passed down through
+        generations.
+      </p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <div class="footer-brand">Mutedeworld</div>
+        <p class="footer-sub">
+          Luxury fashion designed for those<br />who find beauty in stillness.
+        </p>
+      </div>
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links">
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Collections</a></li>
+          <li><a href="#">Lookbook</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Support</p>
+        <ul class="footer-links">
+          <li><a href="#">Sizing Guide</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </footer>
+    <div class="footer-bottom">© 2026 Mutedeworld. All rights reserved.</div>
+
+    <script>
+      /* ── Product data ── edit names, prices, badges and colours here */
+      const products = [
+        {
+          name: "MDW Tee",
+          cat: "tees",
+          price: "₵85",
+          badge: "new",
+          color: "#C8E4F3",
+          image: "images/tees3.jpeg",
+        },
+        {
+          name: "MDW Tee",
+          cat: "tees",
+          price: "₵85",
+          badge: null,
+          color: "#D6EEF8",
+          image: "images/tees2.jpeg",
+        },
+        {
+          name: "Joggers",
+          cat: "joggers",
+          price: "₵180",
+          badge: "new",
+          color: "#EFF7FC",
+          image: "images/joggers1.jpeg",
+        },
+        {
+          name: "Joggers",
+          cat: "joggers",
+          price: "₵180",
+          badge: null,
+          color: "#C8E4F3",
+          image: "images/joggers2.jpeg",
+        },
+        {
+          name: "Shorts",
+          cat: "shorts",
+          price: "₵85",
+          badge: null,
+          color: "#D6EEF8",
+          image: "images/shorts2.jpeg",
+        },
+        {
+          name: "Shorts",
+          cat: "shorts",
+          price: "₵85",
+          badge: "bestseller",
+          color: "#EFF7FC",
+          image: "images/shorts3.jpeg",
+        },
+        {
+          name: "Baggy Jeans",
+          cat: "baggy-jeans",
+          price: "₵210",
+          badge: "new",
+          color: "#B5D4F0",
+          image: "images/baggyjeans1.jpeg",
+        },
+        {
+          name: "Baggy Jeans",
+          cat: "baggy-jeans",
+          price: "₵210",
+          badge: null,
+          color: "#C8E4F3",
+          image: "images/baggyjeans2.jpeg",
+        },
+        {
+          name: " MDW Socks",
+          cat: "socks",
+          price: "₵10",
+          badge: null,
+          color: "#EFF7FC",
+          image: "images/socks2.jpeg",
+        },
+        {
+          name: "MDW Socks",
+          cat: "socks",
+          price: "₵10",
+          badge: "limited",
+          color: "#D6EEF8",
+          image: "images/socks1.png",
+        },
+        {
+          name: "MDW Tank Top",
+          cat: "tank-tops",
+          price: "₵70",
+          badge: null,
+          color: "#C8E4F3",
+          image: "images/tanktop1.jpeg",
+        },
+        {
+          name: "MDW Tank Top",
+          cat: "tank-tops",
+          price: "₵70",
+          badge: "new",
+          color: "#EFF7FC",
+          image: "images/tanktop2.jpeg",
+        },
+        {
+          name: "MDW Bodysuit",
+          cat: "knit-bodysuit",
+          price: "₵80",
+          badge: "limited",
+          color: "#B5D4F0",
+          image: "images/knitbodysuit1.jpeg",
+        },
+        {
+          name: "MDW Bodysuit",
+          cat: "knit-bodysuit",
+          price: "₵80",
+          badge: null,
+          color: "#D6EEF8",
+          image: "images/bodysuit2.jpeg",
+        },
+        {
+          name: "MDW Cap",
+          cat: "caps",
+          price: "₵60",
+          badge: "new",
+          color: "#C8E4F3",
+          image: "images/cap1.png",
+        },
+        {
+          name: "MDW Cap",
+          cat: "caps",
+          price: "₵60",
+          badge: null,
+          color: "#EFF7FC",
+          image: "images/cap2.png",
+        },
+        {
+          name: "MDW Hair Bonnet",
+          cat: "caps",
+          price: "₵40",
+          badge: null,
+          color: "#EFF7FC",
+          image: "images/bonnet1.jpeg",
+        },
+        {
+          name: "MDW Hair Bonnet",
+          cat: "caps",
+          price: "₵40",
+          badge: null,
+          color: "#EFF7FC",
+          image: "images/bonnet2.jpeg",
+        },
+      ];
+
+      /* ── SVG silhouettes per category ── */
+      const shapes = {
+        tees: `<path d="M28 12 L18 30 L20 72 L62 72 L64 30 L52 12 Z" fill="#2E7FB8" opacity="0.22"/><path d="M28 12 Q45 18 52 12 L18 12 Z" fill="#2E7FB8" opacity="0.1"/><path d="M28 12 Q45 19 52 12 L64 30 Q45 36 18 30 Z" fill="#2E7FB8" opacity="0.35"/>`,
+        joggers: `<path d="M22 10 L18 55 L14 90 L36 90 L45 58 L54 90 L76 90 L72 55 L68 10 Z" fill="#2E7FB8" opacity="0.2"/><path d="M22 10 Q45 16 68 10 L22 10 Z" fill="#2E7FB8" opacity="0.3"/><path d="M14 70 Q25 74 36 70" stroke="#2E7FB8" stroke-width="1" fill="none" opacity="0.4"/><path d="M54 70 Q65 74 76 70" stroke="#2E7FB8" stroke-width="1" fill="none" opacity="0.4"/>`,
+        shorts: `<path d="M22 10 L18 50 L14 65 L36 65 L45 40 L54 65 L76 65 L72 50 L68 10 Z" fill="#2E7FB8" opacity="0.22"/><line x1="22" y1="10" x2="68" y2="10" stroke="#2E7FB8" stroke-width="1" opacity="0.3"/>`,
+        "baggy-jeans": `<path d="M18 8 L10 55 L8 90 L34 90 L45 55 L56 90 L82 90 L80 55 L72 8 Z" fill="#1A5C8A" opacity="0.2"/><line x1="18" y1="8" x2="72" y2="8" stroke="#1A5C8A" stroke-width="1.5" opacity="0.4"/><path d="M8 60 Q21 65 34 60" stroke="#1A5C8A" stroke-width="0.7" fill="none" opacity="0.35"/><path d="M56 60 Q69 65 82 60" stroke="#1A5C8A" stroke-width="0.7" fill="none" opacity="0.35"/>`,
+        socks: `<path d="M32 10 L28 10 L28 55 Q28 75 20 82 Q14 88 20 92 L55 92 Q62 88 58 80 Q52 72 52 55 L52 10 Z" fill="#2E7FB8" opacity="0.2"/><path d="M28 10 L52 10 L52 28 L28 28 Z" fill="#2E7FB8" opacity="0.15"/><path d="M20 85 Q37 80 55 85" stroke="#2E7FB8" stroke-width="0.8" fill="none" opacity="0.4"/>`,
+        "tank-tops": `<path d="M33 8 L24 22 L22 75 L68 75 L66 22 L57 8 Z" fill="#2E7FB8" opacity="0.22"/><path d="M33 8 Q45 6 57 8 L57 22 Q45 25 33 22 Z" fill="#2E7FB8" opacity="0.1"/><line x1="33" y1="8" x2="33" y2="22" stroke="#2E7FB8" stroke-width="0.8" opacity="0.35"/><line x1="57" y1="8" x2="57" y2="22" stroke="#2E7FB8" stroke-width="0.8" opacity="0.35"/>`,
+        "knit-bodysuit": `<path d="M28 8 L18 28 L16 65 Q16 80 45 82 Q74 80 74 65 L72 28 L62 8 Z" fill="#2E7FB8" opacity="0.2"/><path d="M28 8 Q45 15 62 8 L72 28 Q45 34 18 28 Z" fill="#2E7FB8" opacity="0.32"/><path d="M16 48 Q45 54 74 48" stroke="#2E7FB8" stroke-width="0.6" fill="none" opacity="0.35"/><path d="M38 82 L38 92 L52 92 L52 82" fill="#2E7FB8" opacity="0.18"/>`,
+        caps: `<ellipse cx="45" cy="52" rx="32" ry="16" fill="#2E7FB8" opacity="0.2"/><path d="M13 52 Q45 20 77 52" fill="#2E7FB8" opacity="0.25"/><path d="M13 52 Q45 22 77 52 Q45 38 13 52 Z" fill="#2E7FB8" opacity="0.15"/><rect x="13" y="50" width="22" height="6" rx="3" fill="#2E7FB8" opacity="0.3"/><line x1="30" y1="36" x2="60" y2="36" stroke="#2E7FB8" stroke-width="0.6" opacity="0.3"/>`,
+      };
+
+      let current = "all";
+ 
+      function setFilter(btn, cat) {
+        current = cat;
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+ 
+        const grid = document.getElementById("productGrid");
+        grid.classList.add("fading");
+        setTimeout(() => {
+          renderProducts();
+          grid.classList.remove("fading");
+        }, 50);
+      }
+ 
+      function renderProducts() {
+        const grid = document.getElementById("productGrid");
+        const filtered =
+          current === "all"
+            ? products
+            : products.filter((p) => p.cat === current);
+ 
+        grid.innerHTML = filtered
+          .map(
+            (p, i) => `
+          <div class="product-card" style="animation-delay: ${i * 0.05}s">
+            ${p.badge ? `<span class="product-badge ${p.badge}">${p.badge}</span>` : ""}
+            <div class="product-img" style="background:${p.color}">
+              ${
+                p.image
+                  ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;display:block;" />`
+                  : `<svg viewBox="0 0 90 95" width="90" height="95">${shapes[p.cat] || shapes.tees}</svg>`
+              }
+              <div class="product-img-overlay">
+                <button class="quick-add">Quick Add</button>
+              </div>
+            </div>
+            <div class="product-info">
+              <p class="product-cat">${p.cat}</p>
+              <p class="product-name">${p.name}</p>
+              <p class="product-price">${p.price}</p>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+ 
+      renderProducts();
+    </script>
+  </body>
+</html>

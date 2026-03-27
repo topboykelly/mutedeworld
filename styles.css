@@ -1,0 +1,719 @@
+/* ============================================================
+   MUTEDEWORLD — Stylesheet
+   Link this file in your HTML: <link rel="stylesheet" href="mutedeworld.css">
+   ============================================================ */
+
+/* ── CSS Variables (colours & fonts) ── */
+:root {
+  --sea: #2e7fb8; /* primary sea blue          */
+  --sea-deep: #1a5c8a; /* darker blue for hover/text */
+  --sea-light: #c8e4f3; /* light blue borders         */
+  --sea-pale: #eff7fc; /* very pale blue backgrounds */
+  --white: #fafcfe; /* off-white page background  */
+  --ink: #0d2233; /* near-black for text/buttons*/
+  --muted: #5a7a90; /* secondary muted text       */
+}
+
+/* ── Reset ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Jost", sans-serif;
+  background: var(--white);
+  color: var(--ink);
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 3rem;
+  border-bottom: 0.5px solid var(--sea-light);
+  background: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 400;
+  transition: color 0.2s;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.nav-links a:hover {
+  color: var(--sea);
+  border-bottom-color: var(--sea);
+}
+
+.nav-right {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.nav-icon {
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--ink);
+  transition: color 0.2s;
+}
+
+.nav-icon:hover {
+  color: var(--sea);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  background: linear-gradient(160deg, var(--sea-pale) 0%, var(--white) 60%);
+  padding: 4rem 3rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  border-bottom: 0.5px solid var(--sea-light);
+}
+
+.hero-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sea);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3.8rem;
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--sea);
+}
+
+.hero-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 340px;
+  margin-bottom: 2rem;
+}
+
+.hero-visual {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.hero-card {
+  background: var(--sea-pale);
+  border: 0.5px solid var(--sea-light);
+  width: 160px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo-display {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-logo-img {
+  max-width: 320px;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* Second hero card is nudged down */
+.hero-card--offset {
+  margin-top: 2rem;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+/* Primary — dark ink background, white text */
+.btn-primary {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.9rem 2.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  border: 2px solid var(--ink);
+  transition:
+    background 0.25s,
+    border-color 0.25s;
+}
+
+.btn-primary:hover {
+  background: var(--sea-deep);
+  border-color: var(--sea-deep);
+}
+
+/* Outline — sea blue border & text */
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--sea-deep);
+  padding: 0.88rem 2.2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 2px solid var(--sea-deep);
+  cursor: pointer;
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  margin-left: 1rem;
+  transition:
+    background 0.25s,
+    color 0.25s;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--sea-deep);
+  color: #fff;
+}
+
+/* ============================================================
+   MARQUEE BAR
+   ============================================================ */
+.marquee-bar {
+  background: var(--sea-deep);
+  color: #fff;
+  overflow: hidden;
+  padding: 0.7rem 0;
+  white-space: nowrap;
+}
+
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 18s linear infinite;
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ============================================================
+   SECTION HEADER (shared)
+   ============================================================ */
+.section-header {
+  text-align: center;
+  padding: 3.5rem 3rem 2.5rem;
+}
+
+.section-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--sea);
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--ink);
+}
+
+/* ============================================================
+   FILTER BUTTONS
+   ============================================================ */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0 3rem 2.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.5rem;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  transition: all 0.2s;
+}
+
+.filter-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.filter-btn:hover:not(.active) {
+  background: var(--sea-pale);
+  border-color: var(--sea);
+  color: var(--sea);
+}
+
+/* ============================================================
+   PRODUCT GRID
+   ============================================================ */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5px;
+  padding: 0 3rem 4rem;
+  background: var(--sea-light);
+  border-top: 1.5px solid var(--sea-light);
+  transition: opacity 0.25s ease;
+}
+
+.product-grid.fading {
+  opacity: 0;
+}
+
+.product-card {
+  background: var(--white);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s;
+  animation: cardIn 0.35s ease both;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  z-index: 2;
+}
+
+.product-card:hover .product-img-overlay {
+  opacity: 1;
+}
+
+/* Product image area */
+.product-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover overlay with Quick Add button */
+.product-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 34, 51, 0.12);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 1.5rem;
+}
+
+.quick-add {
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.6rem;
+  border: none;
+  cursor: pointer;
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  transition: background 0.2s;
+}
+
+.quick-add:hover {
+  background: var(--sea-deep);
+}
+
+/* Product info text */
+.product-info {
+  padding: 1rem 1.2rem 1.4rem;
+}
+
+.product-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.product-cat {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 0.6rem;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  color: var(--sea-deep);
+  font-weight: 400;
+}
+
+/* Badges */
+.product-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  font-weight: 400;
+}
+
+.product-badge.new {
+  background: var(--sea);
+}
+.product-badge.limited {
+  background: #7b3f00;
+}
+/* .product-badge.bestseller uses the default var(--ink) above */
+
+/* ============================================================
+   BRAND PROMISE
+   ============================================================ */
+.promise {
+  background: var(--sea-pale);
+  border-top: 0.5px solid var(--sea-light);
+  border-bottom: 0.5px solid var(--sea-light);
+  padding: 3.5rem 3rem;
+  text-align: center;
+}
+
+.promise-sub {
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 1rem auto 0;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--ink);
+  color: var(--sea-light);
+  padding: 3rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-brand {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  color: #fff;
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.footer-col-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--sea-light);
+}
+
+.footer-bottom {
+  background: var(--ink);
+  text-align: center;
+  padding: 1rem 3rem;
+  border-top: 0.5px solid #1c3a50;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ============================================================
+   RESPONSIVE — Tablet  (max-width: 900px)
+   ============================================================ */
+@media (max-width: 900px) {
+  /* Nav — hide links, keep logo + icons */
+  nav {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  /* Hero — stack vertically, hide decorative cards */
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-sub {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-visual {
+    display: none;
+  }
+
+  /* Hero buttons — stack them */
+  .btn-outline {
+    margin-left: 0;
+    margin-top: 0.75rem;
+  }
+
+  .hero-text .btn-primary,
+  .hero-text .btn-outline {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Section header */
+  .section-header {
+    padding: 2.5rem 1.5rem 1.8rem;
+  }
+
+  /* Filters */
+  .filters {
+    padding: 0 1.5rem 2rem;
+  }
+
+  /* Product grid — 2 columns */
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 1.5rem 3rem;
+  }
+
+  /* Promise */
+  .promise {
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* Footer — 2 columns */
+  footer {
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Footer brand spans full width */
+  footer > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom {
+    padding: 1rem 1.5rem;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile  (max-width: 560px)
+   ============================================================ */
+@media (max-width: 560px) {
+  /* Nav */
+  nav {
+    padding: 1rem 1.2rem;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 2.5rem 1.2rem 2rem;
+  }
+
+  .hero-title {
+    font-size: 2.4rem;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.62rem;
+  }
+
+  /* Product grid — single column */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2px;
+    background: var(--sea-light);
+    border-top: 1.5px solid var(--sea-light);
+    padding: 0 0 3rem !important;
+  }
+
+  /* On mobile show Quick Add permanently (no hover on touch) */
+  .product-img-overlay {
+    opacity: 1;
+    background: rgba(13, 34, 51, 0.08);
+  }
+
+  /* Section header */
+  .section-header {
+    padding: 2rem 1.2rem 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.9rem;
+  }
+
+  /* Filters — scrollable row */
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0 1.2rem 1.8rem;
+    gap: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+  }
+
+  /* Promise */
+  .promise {
+    padding: 2rem 1.2rem;
+  }
+
+  /* Footer — single column */
+  footer {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.2rem;
+    gap: 1.5rem;
+  }
+
+  footer > div:first-child {
+    grid-column: auto;
+  }
+
+  .footer-bottom {
+    padding: 1rem 1.2rem;
+  }
+
+  /* Marquee slightly slower on mobile */
+  .marquee-inner {
+    animation-duration: 24s;
+  }
+}
