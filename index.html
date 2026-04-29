@@ -23,7 +23,7 @@
       <div class="nav-right">
         <span class="nav-icon">&#9825;</span>
         <span class="nav-icon">&#128084;</span>
-        <span class="nav-icon">&#128722;</span>
+        <img src="images/cart1.svg" alt="Cart icon">
       </div>
     </nav>
 
@@ -152,6 +152,7 @@
           badge: "new",
           color: "#C8E4F3",
           image: "images/tees3.jpeg",
+          colors: true,
         },
         {
           name: "MDW Tee",
@@ -319,7 +320,29 @@
           grid.classList.remove("fading");
         }, 50);
       }
- 
+      
+      function addToCart(e, idx) {
+        e.stopPropagation();
+        const filtered = current === "all"
+          ? products
+          : products.filter(p => p.cat === current);
+        const product = filtered[idx];
+
+        let cart = [];
+        try { cart = JSON.parse(sessionStorage.getItem("mdw_cart") || "[]"); } catch(e) {}
+
+        // If item already in cart, increase qty
+        const existing = cart.find(c => c.name === product.name && c.cat === product.cat);
+        if (existing) {
+          existing.qty = (existing.qty || 1) + 1;
+        } else {
+          cart.push({ ...product, qty: 1, size: "M" });
+        }
+
+        sessionStorage.setItem("mdw_cart", JSON.stringify(cart));
+        window.location.href = "cart.html";
+      }
+            
       function renderProducts() {
         const grid = document.getElementById("productGrid");
         const filtered =
@@ -339,15 +362,15 @@
                   : `<svg viewBox="0 0 90 95" width="90" height="95">${shapes[p.cat] || shapes.tees}</svg>`
               }
               <div class="product-img-overlay">
-                <button class="quick-add">Quick Add</button>
+                <button class="quick-add" onclick="addToCart(event, ${i})">Quick Add</button>
               </div>
             </div>
-            <div class="product-info">
-              <p class="product-cat">${p.cat}</p>
-              <p class="product-name">${p.name}</p>
-              <p class="product-price">${p.price}</p>
-              <p class="product-colors">Available in different colors</p>
-            </div>
+              <div class="product-info">
+                <p class="product-cat">${p.cat}</p>
+                <p class="product-name">${p.name}</p>
+                <p class="product-price">${p.price}</p>
+                ${p.colors ? `<p class="product-colors">Available in different colors</p>` : ''}
+              </div>    
           </div>
         `,
           )
