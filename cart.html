@@ -9,255 +9,250 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <body>
-      <!-- NAV -->
-      <nav>
-        <a href="index.html" class="nav-logo">Mutedeworld</a>
-        <a href="index.html" class="nav-back">Continue Shopping</a>
-      </nav>
+  </head>
 
-      <!-- PAGE HEADER -->
-      <div class="page-header">
-        <p class="page-eyebrow">Review & Checkout</p>
-        <h1 class="page-title">Your Cart</h1>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="index.html" class="nav-logo">Mutedeworld</a>
+      <a href="index.html" class="nav-back">Continue Shopping</a>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <p class="page-eyebrow">Review & Checkout</p>
+      <h1 class="page-title">Your Cart</h1>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="cart-layout">
+      <!-- LEFT: CART ITEMS -->
+      <div class="cart-left">
+        <p class="cart-section-label">Items in your order</p>
+        <div id="cartItems"></div>
       </div>
 
-      <!-- MAIN LAYOUT -->
-      <div class="cart-layout">
-        <!-- LEFT: CART ITEMS -->
-        <div class="cart-left">
-          <p class="cart-section-label">Items in your order</p>
-          <div id="cartItems"></div>
+      <!-- RIGHT: SUMMARY + DELIVERY + PAYMENT -->
+      <div class="cart-right">
+        <!-- Order Summary -->
+        <div class="summary-block">
+          <p class="block-title">Order Summary</p>
+          <div class="summary-row">
+            <span class="label">Subtotal</span>
+            <span class="value" id="summarySubtotal">₵0</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Delivery</span>
+            <span class="value" id="summaryDelivery">—</span>
+          </div>
+          <div class="summary-row total">
+            <span class="label">Total</span>
+            <span class="value" id="summaryTotal">₵0</span>
+          </div>
         </div>
 
-        <!-- RIGHT: SUMMARY + DELIVERY + PAYMENT -->
-        <div class="cart-right">
-          <!-- Order Summary -->
-          <div class="summary-block">
-            <p class="block-title">Order Summary</p>
-            <div class="summary-row">
-              <span class="label">Subtotal</span>
-              <span class="value" id="summarySubtotal">₵0</span>
-            </div>
-            <div class="summary-row">
-              <span class="label">Delivery</span>
-              <span class="value" id="summaryDelivery">—</span>
-            </div>
-            <div class="summary-row total">
-              <span class="label">Total</span>
-              <span class="value" id="summaryTotal">₵0</span>
-            </div>
-          </div>
+        <!-- Delivery Details -->
+        <div class="delivery-block">
+          <p class="block-title">Delivery Details</p>
 
-          <!-- Delivery Details -->
-          <div class="delivery-block">
-            <p class="block-title">Delivery Details</p>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">First Name</label>
-                <input
-                  type="text"
-                  class="form-input"
-                  id="firstName"
-                  placeholder="Kwame"
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Last Name</label>
-                <input
-                  type="text"
-                  class="form-input"
-                  id="lastName"
-                  placeholder="Mensah"
-                />
-              </div>
-            </div>
-
+          <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Phone Number</label>
-              <input
-                type="tel"
-                class="form-input"
-                id="phone"
-                placeholder="+233 XX XXX XXXX"
-              />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Email Address</label>
-              <input
-                type="email"
-                class="form-input"
-                id="email"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Region</label>
-              <select
-                class="form-select"
-                id="region"
-                onchange="updateDelivery()"
-              >
-                <option value="">Select Region</option>
-                <option value="accra">Greater Accra</option>
-                <option value="kumasi">Ashanti Region</option>
-                <option value="takoradi">Western Region</option>
-                <option value="cape-coast">Central Region</option>
-                <option value="tamale">Northern Region</option>
-                <option value="other">Other Region</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">City / Town</label>
+              <label class="form-label">First Name</label>
               <input
                 type="text"
                 class="form-input"
-                id="city"
-                placeholder="e.g. Accra, Kumasi, Tema…"
+                id="firstName"
+                placeholder="Kwame"
               />
             </div>
-
             <div class="form-group">
-              <label class="form-label">Delivery Address</label>
-              <textarea
-                class="form-textarea"
-                id="address"
-                placeholder="Street name, area, landmark near you…"
-              ></textarea>
-            </div>
-
-            <div class="delivery-note" id="deliveryNote">
-              Select your region to see delivery options and fees.
+              <label class="form-label">Last Name</label>
+              <input
+                type="text"
+                class="form-input"
+                id="lastName"
+                placeholder="Mensah"
+              />
             </div>
           </div>
 
-          <!-- Payment Method -->
-          <div class="payment-block">
-            <p class="block-title">Payment Method</p>
-
-            <label
-              class="payment-option selected"
-              onclick="selectPayment(this)"
-            >
-              <input type="radio" name="payment" value="momo" checked />
-              <div>
-                <div class="payment-option-label">Mobile Money</div>
-                <div class="payment-option-sub">
-                  MTN MoMo · Vodafone Cash · AirtelTigo
-                </div>
-              </div>
-            </label>
-
-            <label class="payment-option" onclick="selectPayment(this)">
-              <input type="radio" name="payment" value="card" />
-              <div>
-                <div class="payment-option-label">Debit / Credit Card</div>
-                <div class="payment-option-sub">
-                  Visa · Mastercard · Ghana Cards
-                </div>
-              </div>
-            </label>
-
-            <label class="payment-option" onclick="selectPayment(this)">
-              <input type="radio" name="payment" value="cod" />
-              <div>
-                <div class="payment-option-label">Pay on Delivery</div>
-                <div class="payment-option-sub">
-                  Cash or MoMo at your door — Accra only
-                </div>
-              </div>
-            </label>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              class="form-input"
+              id="phone"
+              placeholder="+233 XX XXX XXXX"
+            />
           </div>
 
-          <!-- Checkout -->
-          <button class="checkout-btn" id="checkoutBtn" onclick="placeOrder()">
-            Place Order
-          </button>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input
+              type="email"
+              class="form-input"
+              id="email"
+              placeholder="you@example.com"
+            />
+          </div>
 
-          <p class="secure-note">Secure checkout — your data is protected</p>
+          <div class="form-group">
+            <label class="form-label">Region</label>
+            <select class="form-select" id="region" onchange="updateDelivery()">
+              <option value="">Select Region</option>
+              <option value="accra">Greater Accra</option>
+              <option value="kumasi">Ashanti Region</option>
+              <option value="takoradi">Western Region</option>
+              <option value="cape-coast">Central Region</option>
+              <option value="tamale">Northern Region</option>
+              <option value="other">Other Region</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">City / Town</label>
+            <input
+              type="text"
+              class="form-input"
+              id="city"
+              placeholder="e.g. Accra, Kumasi, Tema…"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Delivery Address</label>
+            <textarea
+              class="form-textarea"
+              id="address"
+              placeholder="Street name, area, landmark near you…"
+            ></textarea>
+          </div>
+
+          <div class="delivery-note" id="deliveryNote">
+            Select your region to see delivery options and fees.
+          </div>
         </div>
-      </div>
 
-      <!-- SUCCESS MODAL -->
-      <div class="modal-overlay" id="successModal">
-        <div class="modal">
-          <div class="modal-icon">✦</div>
-          <h2 class="modal-title">Order Placed</h2>
-          <p class="modal-sub">
-            Thank you for shopping with Mutedeworld.<br />
-            You'll receive a confirmation on your phone shortly.<br />
-            <em>Designed with intention, worn with purpose.</em>
-          </p>
-          <a href="index.html" class="btn-primary">Back to Collection</a>
+        <!-- Payment Method -->
+        <div class="payment-block">
+          <p class="block-title">Payment Method</p>
+
+          <label class="payment-option selected" onclick="selectPayment(this)">
+            <input type="radio" name="payment" value="momo" checked />
+            <div>
+              <div class="payment-option-label">Mobile Money</div>
+              <div class="payment-option-sub">
+                MTN MoMo · Vodafone Cash · AirtelTigo
+              </div>
+            </div>
+          </label>
+
+          <label class="payment-option" onclick="selectPayment(this)">
+            <input type="radio" name="payment" value="card" />
+            <div>
+              <div class="payment-option-label">Debit / Credit Card</div>
+              <div class="payment-option-sub">
+                Visa · Mastercard · Ghana Cards
+              </div>
+            </div>
+          </label>
+
+          <label class="payment-option" onclick="selectPayment(this)">
+            <input type="radio" name="payment" value="cod" />
+            <div>
+              <div class="payment-option-label">Pay on Delivery</div>
+              <div class="payment-option-sub">
+                Cash or MoMo at your door — Accra only
+              </div>
+            </div>
+          </label>
         </div>
+
+        <!-- Checkout -->
+        <button class="checkout-btn" id="checkoutBtn" onclick="placeOrder()">
+          Place Order
+        </button>
+
+        <p class="secure-note">Secure checkout — your data is protected</p>
       </div>
+    </div>
 
-      <script>
-        // ── Delivery fees ──
-        const deliveryFees = {
-          accra: 0, // Free in Accra over ₵500
-          kumasi: 60,
-          takoradi: 80,
-          "cape-coast": 70,
-          tamale: 100,
-          other: 120,
-        };
+    <!-- SUCCESS MODAL -->
+    <div class="modal-overlay" id="successModal">
+      <div class="modal">
+        <div class="modal-icon">✦</div>
+        <h2 class="modal-title">Order Placed</h2>
+        <p class="modal-sub">
+          Thank you for shopping with Mutedeworld.<br />
+          You'll receive a confirmation on your phone shortly.<br />
+          <em>Designed with intention, worn with purpose.</em>
+        </p>
+        <a href="index.html" class="btn-primary">Back to Collection</a>
+      </div>
+    </div>
 
-        const deliveryMessages = {
-          accra:
-            "🚚 Free delivery within Accra for orders over ₵500. Under ₵500 a ₵30 fee applies.",
-          kumasi:
-            "📦 Delivery to Ashanti Region — ₵60 flat fee. Estimated 2–3 business days.",
-          takoradi:
-            "📦 Delivery to Western Region — ₵80 flat fee. Estimated 2–4 business days.",
-          "cape-coast":
-            "📦 Delivery to Central Region — ₵70 flat fee. Estimated 2–3 business days.",
-          tamale:
-            "📦 Delivery to Northern Region — ₵100 flat fee. Estimated 3–5 business days.",
-          other:
-            "📦 Delivery to your region — ₵120 flat fee. Contact us for exact timeline.",
-        };
+    <script>
+      // ── Delivery fees ──
+      const deliveryFees = {
+        accra: 0, // Free in Accra over ₵500
+        kumasi: 60,
+        takoradi: 80,
+        "cape-coast": 70,
+        tamale: 100,
+        other: 120,
+      };
 
-        // ── Load cart from sessionStorage ──
-        let cart = [];
-        try {
-          const stored = sessionStorage.getItem("mdw_cart");
-          if (stored) cart = JSON.parse(stored);
-        } catch (e) {}
+      const deliveryMessages = {
+        accra:
+          "🚚 Free delivery within Accra for orders over ₵500. Under ₵500 a ₵30 fee applies.",
+        kumasi:
+          "📦 Delivery to Ashanti Region — ₵60 flat fee. Estimated 2–3 business days.",
+        takoradi:
+          "📦 Delivery to Western Region — ₵80 flat fee. Estimated 2–4 business days.",
+        "cape-coast":
+          "📦 Delivery to Central Region — ₵70 flat fee. Estimated 2–3 business days.",
+        tamale:
+          "📦 Delivery to Northern Region — ₵100 flat fee. Estimated 3–5 business days.",
+        other:
+          "📦 Delivery to your region — ₵120 flat fee. Contact us for exact timeline.",
+      };
 
-        function getNumericPrice(priceStr) {
-          return parseFloat(priceStr.replace(/[₵,]/g, "")) || 0;
-        }
+      // ── Load cart from sessionStorage ──
+      let cart = [];
+      try {
+        const stored = sessionStorage.getItem("mdw_cart");
+        if (stored) cart = JSON.parse(stored);
+      } catch (e) {}
 
-        function saveCart() {
-          sessionStorage.setItem("mdw_cart", JSON.stringify(cart));
-        }
+      function getNumericPrice(priceStr) {
+        return parseFloat(priceStr.replace(/[₵,]/g, "")) || 0;
+      }
 
-        function renderCart() {
-          const container = document.getElementById("cartItems");
+      function saveCart() {
+        sessionStorage.setItem("mdw_cart", JSON.stringify(cart));
+      }
 
-          if (cart.length === 0) {
-            container.innerHTML = `
+      function renderCart() {
+        const container = document.getElementById("cartItems");
+
+        if (cart.length === 0) {
+          container.innerHTML = `
             <div class="empty-cart">
               <div class="empty-cart-icon">🛍</div>
               <h3>Your cart is empty</h3>
               <p>Head back to the collection and add something you love.</p>
               <a href="index.html" class="btn-primary">Shop Collection</a>
             </div>`;
-            updateSummary();
-            document.getElementById("checkoutBtn").disabled = true;
-            return;
-          }
+          updateSummary();
+          document.getElementById("checkoutBtn").disabled = true;
+          return;
+        }
 
-          document.getElementById("checkoutBtn").disabled = false;
+        document.getElementById("checkoutBtn").disabled = false;
 
-          container.innerHTML = cart
-            .map(
-              (item, idx) => `
+        container.innerHTML = cart
+          .map(
+            (item, idx) => `
           <div class="cart-item" id="item-${idx}">
             <div>
               ${
@@ -297,131 +292,129 @@
             </div>
           </div>
         `,
-            )
-            .join("");
+          )
+          .join("");
 
-          updateSummary();
-        }
+        updateSummary();
+      }
 
-        function updateSummary() {
-          const subtotal = cart.reduce(
-            (sum, item) => sum + getNumericPrice(item.price) * item.qty,
-            0,
-          );
+      function updateSummary() {
+        const subtotal = cart.reduce(
+          (sum, item) => sum + getNumericPrice(item.price) * item.qty,
+          0,
+        );
 
-          const region = document.getElementById("region").value;
-          let delivery = 0;
-          let deliveryLabel = "—";
+        const region = document.getElementById("region").value;
+        let delivery = 0;
+        let deliveryLabel = "—";
 
-          if (region) {
-            const fee = deliveryFees[region] ?? 120;
-            // Accra free over ₵500
-            if (region === "accra" && subtotal >= 500) {
-              delivery = 0;
-              deliveryLabel = "Free";
-            } else if (region === "accra") {
-              delivery = 30;
-              deliveryLabel = "₵30";
-            } else {
-              delivery = fee;
-              deliveryLabel = `₵${fee}`;
-            }
-          }
-
-          const total = subtotal + delivery;
-
-          document.getElementById("summarySubtotal").textContent =
-            `₵${subtotal.toFixed(0)}`;
-          document.getElementById("summaryDelivery").textContent =
-            deliveryLabel;
-          document.getElementById("summaryTotal").textContent =
-            `₵${total.toFixed(0)}`;
-        }
-
-        function updateDelivery() {
-          const region = document.getElementById("region").value;
-          const note = document.getElementById("deliveryNote");
-          if (region && deliveryMessages[region]) {
-            note.textContent = deliveryMessages[region];
+        if (region) {
+          const fee = deliveryFees[region] ?? 120;
+          // Accra free over ₵500
+          if (region === "accra" && subtotal >= 500) {
+            delivery = 0;
+            deliveryLabel = "Free";
+          } else if (region === "accra") {
+            delivery = 30;
+            deliveryLabel = "₵30";
           } else {
-            note.textContent =
-              "Select your region to see delivery options and fees.";
+            delivery = fee;
+            deliveryLabel = `₵${fee}`;
           }
-          updateSummary();
         }
 
-        function changeQty(idx, delta) {
-          cart[idx].qty = Math.max(1, (cart[idx].qty || 1) + delta);
+        const total = subtotal + delivery;
+
+        document.getElementById("summarySubtotal").textContent =
+          `₵${subtotal.toFixed(0)}`;
+        document.getElementById("summaryDelivery").textContent = deliveryLabel;
+        document.getElementById("summaryTotal").textContent =
+          `₵${total.toFixed(0)}`;
+      }
+
+      function updateDelivery() {
+        const region = document.getElementById("region").value;
+        const note = document.getElementById("deliveryNote");
+        if (region && deliveryMessages[region]) {
+          note.textContent = deliveryMessages[region];
+        } else {
+          note.textContent =
+            "Select your region to see delivery options and fees.";
+        }
+        updateSummary();
+      }
+
+      function changeQty(idx, delta) {
+        cart[idx].qty = Math.max(1, (cart[idx].qty || 1) + delta);
+        saveCart();
+        renderCart();
+      }
+
+      function updateSize(idx, size) {
+        cart[idx].size = size;
+        saveCart();
+      }
+
+      function removeItem(idx) {
+        const el = document.getElementById(`item-${idx}`);
+        if (el) {
+          el.style.opacity = "0";
+          el.style.transform = "translateX(-20px)";
+          el.style.transition = "opacity 0.25s, transform 0.25s";
+        }
+        setTimeout(() => {
+          cart.splice(idx, 1);
           saveCart();
           renderCart();
-        }
+        }, 250);
+      }
 
-        function updateSize(idx, size) {
-          cart[idx].size = size;
-          saveCart();
-        }
+      function selectPayment(label) {
+        document
+          .querySelectorAll(".payment-option")
+          .forEach((l) => l.classList.remove("selected"));
+        label.classList.add("selected");
+        label.querySelector("input").checked = true;
+      }
 
-        function removeItem(idx) {
-          const el = document.getElementById(`item-${idx}`);
-          if (el) {
-            el.style.opacity = "0";
-            el.style.transform = "translateX(-20px)";
-            el.style.transition = "opacity 0.25s, transform 0.25s";
+      function placeOrder() {
+        // Basic validation
+        const required = [
+          "firstName",
+          "lastName",
+          "phone",
+          "region",
+          "city",
+          "address",
+        ];
+        let valid = true;
+        required.forEach((id) => {
+          const el = document.getElementById(id);
+          if (!el.value.trim()) {
+            el.style.borderColor = "#c0392b";
+            valid = false;
+          } else {
+            el.style.borderColor = "";
           }
-          setTimeout(() => {
-            cart.splice(idx, 1);
-            saveCart();
-            renderCart();
-          }, 250);
-        }
+        });
 
-        function selectPayment(label) {
+        if (!valid) {
+          // scroll to delivery
           document
-            .querySelectorAll(".payment-option")
-            .forEach((l) => l.classList.remove("selected"));
-          label.classList.add("selected");
-          label.querySelector("input").checked = true;
+            .querySelector(".delivery-block")
+            .scrollIntoView({ behavior: "smooth" });
+          return;
         }
 
-        function placeOrder() {
-          // Basic validation
-          const required = [
-            "firstName",
-            "lastName",
-            "phone",
-            "region",
-            "city",
-            "address",
-          ];
-          let valid = true;
-          required.forEach((id) => {
-            const el = document.getElementById(id);
-            if (!el.value.trim()) {
-              el.style.borderColor = "#c0392b";
-              valid = false;
-            } else {
-              el.style.borderColor = "";
-            }
-          });
+        if (cart.length === 0) return;
 
-          if (!valid) {
-            // scroll to delivery
-            document
-              .querySelector(".delivery-block")
-              .scrollIntoView({ behavior: "smooth" });
-            return;
-          }
+        // Show success modal
+        sessionStorage.removeItem("mdw_cart");
+        document.getElementById("successModal").classList.add("visible");
+      }
 
-          if (cart.length === 0) return;
-
-          // Show success modal
-          sessionStorage.removeItem("mdw_cart");
-          document.getElementById("successModal").classList.add("visible");
-        }
-
-        // Initial render
-        renderCart();
-      </script>
-    </body>
-  </head>
+      // Initial render
+      renderCart();
+    </script>
+  </body>
 </html>
