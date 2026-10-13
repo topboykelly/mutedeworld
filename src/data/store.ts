@@ -11,8 +11,8 @@ export const brand = {
 
 export const contact = {
   /** International format, digits only (used for wa.me links). */
-  whatsapp: "233509037686",
-  phone: "+233 50 903 7686",
+  whatsapp: "233558177451",
+  phone: "+233 55 817 7451",
   email: "osmanemmanuel673@gmail.com",
   location: "Accra, Ghana",
   hours: "Mon – Sat, 9am – 6pm",
