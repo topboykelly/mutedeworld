@@ -1,0 +1,60 @@
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import type { Category } from "@/data/store";
+import { cn } from "@/lib/cn";
+import type { ProductPhoto } from "@/lib/product";
+import { ProductImage } from "../ui/ProductImage";
+
+/** Remount with a new `key` when the photo set changes so the selection resets. */
+export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; name: string; category: Category }) {
+  const [index, setIndex] = useState(0);
+  const current = photos[index]?.url ?? "";
+
+  return (
+    <div className="flex flex-col gap-3 md:flex-row-reverse">
+      <div className="relative flex-1">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={current}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ProductImage
+              src={current}
+              alt={name}
+              category={category}
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              preload={index === 0}
+              className="aspect-[3/4] rounded-4xl"
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {photos.length > 1 && (
+        <ul className="no-scrollbar flex gap-2 overflow-x-auto md:w-20 md:flex-col" aria-label="Photos">
+          {photos.map((photo, i) => (
+            <li key={photo.url} className="shrink-0">
+              <button
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Show photo ${i + 1}`}
+                aria-current={i === index}
+                className={cn(
+                  "block w-16 overflow-hidden rounded-2xl ring-2 transition md:w-20",
+                  i === index ? "ring-accent" : "ring-transparent opacity-70 hover:opacity-100",
+                )}
+              >
+                <ProductImage src={photo.url} alt="" category={category} sizes="80px" className="aspect-[3/4]" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}

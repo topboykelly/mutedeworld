@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Change the accent (sea blue) here to re-theme the whole site. */
+@theme {
+  --color-accent: #0891b2;
+  --color-accent-light: #22b8cf;
+  --color-accent-dark: #0b6e8a;
+  --color-accent-soft: #e0f6fa;
+
+  /* ink: text, paper: page background, surface: cards, night: dark blocks (pills, marquee, panels) */
+  --color-ink: #0a0a0a;
+  --color-paper: #f5f5f5;
+  --color-surface: #ffffff;
+  --color-night: #0a0a0a;
+  --color-muted: #6b7280;
+  --color-danger: #dc2626;
+
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 35s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+:root {
+  --grid-line: rgb(0 0 0 / 0.045);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-accent-soft: #0c2f3a;
+  --color-ink: #f1f5f9;
+  --color-paper: #0a0f14;
+  --color-surface: #111820;
+  --color-night: #1a2530;
+  --color-muted: #94a3b8;
+  --color-danger: #f87171;
+  --grid-line: rgb(255 255 255 / 0.05);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* In the base layer so elements with their own transition utilities keep them. */
+@layer base {
+  .theme-fade,
+  .theme-fade *,
+  .theme-fade *::before,
+  .theme-fade *::after {
+    transition-property: color, background-color, border-color, fill, stroke, box-shadow;
+    transition-duration: 0.45s;
+    transition-timing-function: ease;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+  padding-inline: 1.25rem;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
