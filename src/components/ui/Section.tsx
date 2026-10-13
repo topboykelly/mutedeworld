@@ -37,7 +37,8 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      // A fixed offset rather than a fraction of the element, so tall blocks like the product grid don't wait to be mostly on screen.
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
       transition={{ duration: 0.7, ease: easeOut, delay }}
     >
       {children}

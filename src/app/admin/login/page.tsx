@@ -27,7 +27,7 @@ export default function LoginPage() {
 function BrandPanel() {
   return (
     <div
-      className="relative flex flex-col justify-between gap-10 overflow-hidden bg-accent bg-grid p-8 text-white sm:p-12 lg:min-h-screen lg:p-16"
+      className="relative hidden flex-col justify-between gap-10 overflow-hidden bg-accent bg-grid p-16 text-white lg:flex lg:min-h-screen"
       style={{ "--grid-line": "rgb(255 255 255 / 0.1)" } as React.CSSProperties}
     >
       <Star4 className="absolute top-[18%] right-[12%] size-10 text-white/25" />
@@ -45,17 +45,17 @@ function BrandPanel() {
       </div>
 
       <div className="relative">
-        <p className="text-5xl font-bold tracking-tight uppercase sm:text-6xl lg:text-7xl xl:text-8xl">
+        <p className="text-7xl font-bold tracking-tight uppercase xl:text-8xl">
           {brand.name}
           <span className="text-night">.</span>
         </p>
-        <p className="mt-4 flex items-center gap-1 text-xl font-medium text-white/90 sm:text-2xl">
+        <p className="mt-4 flex items-center gap-1 text-2xl font-medium text-white/90">
           {brand.tagline}
           <Sparkle className="size-6 -translate-y-3 text-white" />
         </p>
       </div>
 
-      <p className="relative hidden text-sm text-white/70 lg:block">
+      <p className="relative text-sm text-white/70">
         Manage products, stock and orders · © {brand.copyrightYear} {brand.name}
       </p>
     </div>
