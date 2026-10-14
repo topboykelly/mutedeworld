@@ -72,10 +72,6 @@ export type Badge = (typeof badges)[number];
 /** Stock at or below this shows an "Only N left" note. */
 export const LOW_STOCK_THRESHOLD = 3;
 
-export const heroTags: Category[] = ["tees", "joggers", "baggy-jeans", "knit-bodysuit", "caps", "tank-tops"];
-
-export const heroQuote = "Designed with intention, worn with purpose. Pieces for people who let their presence speak first.";
-
 export const marquee = [
   "Free Delivery in Accra over GH₵500",
   "New Collection Now Available",

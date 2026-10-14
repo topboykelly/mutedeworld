@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { categories, type Category } from "@/data/store";
 import { cn } from "@/lib/cn";
-import { onShowCategory } from "@/lib/filter";
 import type { Product } from "@/lib/product";
 import { ProductCard } from "./ProductCard";
 import { Reveal, Section, easeOut } from "./ui/Section";
@@ -14,8 +13,6 @@ type Filter = Category | "all";
 
 export function Collection({ products }: { products: Product[] }) {
   const [filter, setFilter] = useState<Filter>("all");
-
-  useEffect(() => onShowCategory(setFilter), []);
 
   const present = new Set(products.map((p) => p.category));
   const filters: { id: Filter; label: string }[] = [
