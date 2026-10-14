@@ -7,9 +7,11 @@ import { saveOrderNote, setOrderStatus } from "@/app/admin/actions";
 import { orderStatuses } from "@/data/store";
 import { cn } from "@/lib/cn";
 import { TextArea } from "../ui/fields";
+import { useAdminToast } from "./AdminToast";
 
 export function OrderStatusControl({ orderId, status }: { orderId: string; status: string }) {
   const router = useRouter();
+  const notify = useAdminToast();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState("");
   const cancelled = status === "cancelled";
@@ -22,7 +24,8 @@ export function OrderStatusControl({ orderId, status }: { orderId: string; statu
     startTransition(async () => {
       setError("");
       const result = await setOrderStatus(orderId, next);
-      if (!result.ok) setError(result.error);
+      if (result.ok) notify("Changes saved");
+      else setError(result.error);
       router.refresh();
     });
   };
@@ -63,17 +66,18 @@ export function OrderStatusControl({ orderId, status }: { orderId: string; statu
 export function OrderNote({ orderId, note }: { orderId: string; note: string }) {
   const [value, setValue] = useState(note);
   const [saved, setSaved] = useState(note);
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [pending, startTransition] = useTransition();
+  const notify = useAdminToast();
 
   const save = () =>
     startTransition(async () => {
       const result = await saveOrderNote(orderId, value);
       if (result.ok) {
         setSaved(value);
-        setMessage("Saved.");
+        notify("Changes saved");
       } else {
-        setMessage(result.error);
+        setError(result.error);
       }
     });
 
@@ -87,12 +91,12 @@ export function OrderNote({ orderId, note }: { orderId: string; note: string }) 
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
-          setMessage("");
+          setError("");
         }}
         placeholder="Only you can see this, e.g. paid via MoMo, rider name…"
       />
       <div className="mt-2 flex items-center justify-end gap-3">
-        {message && <span className="text-sm text-muted">{message}</span>}
+        {error && <span className="text-sm text-danger">{error}</span>}
         <button
           type="button"
           onClick={save}

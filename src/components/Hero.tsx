@@ -27,7 +27,7 @@ export function Hero({ products }: { products: Product[] }) {
         initial={{ opacity: 0, scale: 1.04 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.4, ease: easeOut }}
-        className="absolute inset-0 lg:inset-y-0 lg:right-auto lg:left-1/2 lg:h-full lg:aspect-[819/1024] lg:-translate-x-1/2 lg:[mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
+        className="absolute inset-0 lg:inset-y-0 lg:right-auto lg:left-1/2 lg:h-full lg:aspect-[3/4] lg:-translate-x-1/2 lg:[mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
       >
         <Image
           src={heroPhoto}

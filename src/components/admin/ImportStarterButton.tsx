@@ -1,32 +1,28 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Download, Loader2 } from "lucide-react";
 import { importStarterProducts } from "@/app/admin/actions";
 import { cn } from "@/lib/cn";
+import { useAdminToast } from "./AdminToast";
 
 export function ImportStarterButton({ prominent = false }: { prominent?: boolean }) {
   const router = useRouter();
+  const notify = useAdminToast();
   const [pending, startTransition] = useTransition();
-  const [message, setMessage] = useState("");
 
   const run = () =>
     startTransition(async () => {
       const result = await importStarterProducts();
-      setMessage(
-        result.ok
-          ? result.count
-            ? `Imported ${result.count} products.`
-            : "All starter products are already in your catalogue."
-          : result.error,
-      );
+      if (!result.ok) notify(result.error, false);
+      else if (result.count) notify(`Imported ${result.count} products`);
+      else notify("All starter products are already in your catalogue");
       router.refresh();
     });
 
   return (
     <div className="flex items-center gap-3">
-      {message && <span className="text-sm text-muted">{message}</span>}
       <button
         type="button"
         onClick={run}

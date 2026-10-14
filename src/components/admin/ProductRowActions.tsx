@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Pencil, Star, Trash2 } from "lucide-react";
 import { deleteProduct, setProductFlag } from "@/app/admin/actions";
 import { cn } from "@/lib/cn";
+import { useAdminToast } from "./AdminToast";
 
 export function Toggle({
   checked,
@@ -53,20 +54,19 @@ export function ProductRowActions({
   featured: boolean;
 }) {
   const router = useRouter();
+  const notify = useAdminToast();
   const [pending, startTransition] = useTransition();
-  const [error, setError] = useState("");
 
-  const run = (action: () => Promise<{ ok: boolean; error?: string }>) =>
+  const run = (action: () => Promise<{ ok: boolean; error?: string }>, success = "Changes saved") =>
     startTransition(async () => {
-      setError("");
       const result = await action();
-      if (!result.ok) setError(result.error ?? "Something went wrong.");
+      if (result.ok) notify(success);
+      else notify(result.error ?? "Something went wrong.", false);
       router.refresh();
     });
 
   return (
     <div className="flex flex-wrap items-center gap-1 sm:justify-end sm:gap-3">
-      {error && <span className="w-full text-xs text-danger sm:w-auto">{error}</span>}
       <label className="mr-auto flex items-center gap-2 text-xs text-muted sm:mr-0">
         <Toggle
           checked={isActive}
@@ -102,7 +102,7 @@ export function ProductRowActions({
         disabled={pending}
         onClick={() => {
           if (confirm(`Delete "${name}"? This can't be undone. To hide it instead, switch it off.`)) {
-            run(() => deleteProduct(id));
+            run(() => deleteProduct(id), "Product deleted");
           }
         }}
         aria-label={`Delete ${name}`}

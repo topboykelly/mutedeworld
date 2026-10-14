@@ -2,6 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, ImagePlus, Loader2, Plus, Trash2, X } from "lucide-react";
 import { saveProduct } from "@/app/admin/actions";
 import { allSizes, badges, categories, defaultSizesFor, type Badge, type Category } from "@/data/store";
@@ -12,6 +13,7 @@ import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { PRODUCT_IMAGES_BUCKET } from "@/lib/supabase/env";
 import { ProductImage } from "../ui/ProductImage";
 import { Field, Select, TextArea, TextInput } from "../ui/fields";
+import { useAdminToast } from "./AdminToast";
 import { Toggle } from "./ProductRowActions";
 import { Card } from "./ui";
 
@@ -126,6 +128,8 @@ export function ProductForm({ product, nextSortOrder = 0 }: { product: Product |
   const [uploadError, setUploadError] = useState("");
   const [fillValue, setFillValue] = useState("");
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
+  const notify = useAdminToast();
   const nextColorId = useRef(form.colors.length);
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -236,7 +240,10 @@ export function ProductForm({ product, nextSortOrder = 0 }: { product: Product |
     setFormError("");
     startTransition(async () => {
       const result = await saveProduct(product?.id ?? null, input);
-      if (result && !result.ok) {
+      if (result.ok) {
+        notify(product ? "Changes saved" : "Product added");
+        router.push("/admin/products");
+      } else {
         setErrors(result.fieldErrors ?? {});
         setFormError(result.error);
       }

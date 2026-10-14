@@ -64,7 +64,7 @@ function storagePaths(urls: string[]) {
   return urls.filter((url) => url.startsWith(publicPrefix)).map((url) => decodeURIComponent(url.slice(publicPrefix.length)));
 }
 
-export type SaveProductResult = { ok: false; error: string; fieldErrors?: ProductInputErrors };
+export type SaveProductResult = { ok: true } | { ok: false; error: string; fieldErrors?: ProductInputErrors };
 
 export async function saveProduct(id: string | null, input: ProductInput): Promise<SaveProductResult> {
   const { supabase } = await requireAdmin();
@@ -102,7 +102,7 @@ export async function saveProduct(id: string | null, input: ProductInput): Promi
   if (removed.length) await supabase.storage.from(PRODUCT_IMAGES_BUCKET).remove(removed);
 
   updateTag(PRODUCTS_TAG);
-  redirect("/admin/products");
+  return { ok: true };
 }
 
 export async function deleteProduct(id: string): Promise<ActionResult> {
