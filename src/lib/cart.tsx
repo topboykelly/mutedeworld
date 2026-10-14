@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useState, useSyncExternalStore } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { colorNames, stockFor, type Product } from "./product";
 
 const STORAGE_KEY = "mdw_cart";
@@ -96,13 +96,21 @@ type CartContextValue = {
   isOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  /** A short confirmation shown after adding to the cart. */
+  toast: CartToast | null;
+  notify: (message: string, ok?: boolean) => void;
+  dismissToast: () => void;
 };
+
+export type CartToast = { id: number; message: string; ok: boolean };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ products, children }: { products: Product[]; children: React.ReactNode }) {
   const stored = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [isOpen, setIsOpen] = useState(false);
+  const [toast, setToast] = useState<CartToast | null>(null);
+  const toastId = useRef(0);
 
   const byId = useMemo(() => new Map(products.map((p) => [p.id, p])), [products]);
 
@@ -188,6 +196,11 @@ export function CartProvider({ products, children }: { products: Product[]; chil
   const clear = useCallback(() => setLines(EMPTY), []);
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
+  const notify = useCallback((message: string, ok = true) => {
+    toastId.current += 1;
+    setToast({ id: toastId.current, message, ok });
+  }, []);
+  const dismissToast = useCallback(() => setToast(null), []);
 
   const value = useMemo<CartContextValue>(
     () => ({
@@ -204,8 +217,11 @@ export function CartProvider({ products, children }: { products: Product[]; chil
       isOpen,
       openCart,
       closeCart,
+      toast,
+      notify,
+      dismissToast,
     }),
-    [cartLines, addItem, qtyInCart, updateQty, updateVariant, removeItem, clear, isOpen, openCart, closeCart],
+    [cartLines, addItem, qtyInCart, updateQty, updateVariant, removeItem, clear, isOpen, openCart, closeCart, toast, notify, dismissToast],
   );
 
   return <CartContext value={value}>{children}</CartContext>;

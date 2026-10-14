@@ -17,7 +17,7 @@ import { Gallery } from "./Gallery";
 import { SizeGuide } from "./SizeGuide";
 
 export function ProductView({ product }: { product: Product }) {
-  const { addItem, qtyInCart, openCart } = useCart();
+  const { addItem, qtyInCart, notify } = useCart();
   const initial = firstAvailable(product);
   const [color, setColor] = useState(initial?.color ?? product.colors[0]?.name ?? "");
   const [size, setSize] = useState(initial?.size ?? "");
@@ -45,7 +45,7 @@ export function ProductView({ product }: { product: Product }) {
     if (!size || room === 0) return;
     addItem(product.id, color, size, Math.min(qty, room));
     setQty(1);
-    openCart();
+    notify("Added to cart");
   };
 
   const askText = `Hi, I'm interested in the ${product.name}${

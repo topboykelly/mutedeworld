@@ -16,15 +16,15 @@ export const badgeStyles: Record<NonNullable<Product["badge"]>, string> = {
 };
 
 export function ProductCard({ product }: { product: Product }) {
-  const { addItem, openCart } = useCart();
+  const { addItem, notify } = useCart();
   const variant = firstAvailable(product);
   const lowStock = lowStockCount(product);
   const href = `/product/${product.slug}`;
 
   const quickAdd = () => {
     if (!variant) return;
-    addItem(product.id, variant.color, variant.size);
-    openCart();
+    const added = addItem(product.id, variant.color, variant.size);
+    notify(added ? "Added to cart" : "That's all we have in stock", added > 0);
   };
 
   return (

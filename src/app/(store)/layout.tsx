@@ -1,3 +1,4 @@
+import { CartToast } from "@/components/CartToast";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -13,6 +14,7 @@ export default async function StoreLayout({ children }: { children: React.ReactN
       <main>{children}</main>
       <Footer />
       <WhatsAppButton />
+      <CartToast />
     </CartProvider>
   );
 }
