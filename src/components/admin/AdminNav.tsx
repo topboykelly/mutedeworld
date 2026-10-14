@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -27,12 +27,20 @@ export function AdminNav({ showSignOut }: { showSignOut: boolean }) {
 /** Without a pathname (while the route's params are still unknown) no link is highlighted. */
 export function AdminNavShell({ pathname, showSignOut }: { pathname: string | null; showSignOut: boolean }) {
   const [open, setOpen] = useState(false);
+  const barRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onPointer = (e: PointerEvent) => {
+      if (!barRef.current?.contains(e.target as Node)) setOpen(false);
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
   }, [open]);
 
   const isActive = (href: string) =>
@@ -59,16 +67,10 @@ export function AdminNavShell({ pathname, showSignOut }: { pathname: string | nu
     </>
   );
 
-  const signOutButton = (className?: string) =>
+  const signOutButton = () =>
     showSignOut && (
       <form action={signOut}>
-        <button
-          type="submit"
-          className={cn(
-            "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-danger/10 hover:text-danger",
-            className,
-          )}
-        >
+        <button type="submit" className={cn(linkClass, "w-full text-ink/70 hover:bg-danger/10 hover:text-danger")}>
           <LogOut className="size-4" aria-hidden="true" />
           Sign out
         </button>
@@ -76,12 +78,17 @@ export function AdminNavShell({ pathname, showSignOut }: { pathname: string | nu
     );
 
   return (
-    <aside className="sticky top-0 z-40 border-b border-ink/10 bg-surface/90 backdrop-blur-md lg:h-screen lg:border-r lg:border-b-0">
+    <aside
+      ref={barRef}
+      className="sticky top-0 z-40 border-b border-ink/10 bg-surface/90 backdrop-blur-md lg:h-screen lg:border-r lg:border-b-0"
+    >
       <div className="flex h-full flex-col p-4 lg:p-6">
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 lg:flex-col lg:items-start">
             <Logo />
-            <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent">Admin</span>
+            <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent lg:ml-11">
+              Admin
+            </span>
           </div>
           <div className="flex items-center gap-2 lg:hidden">
             <ThemeToggle />
@@ -102,27 +109,27 @@ export function AdminNavShell({ pathname, showSignOut }: { pathname: string | nu
           {navLinks()}
         </nav>
 
-        <div className="mt-auto hidden items-center justify-between gap-3 lg:flex">
+        <div className="mt-auto hidden flex-col gap-3 lg:flex">
           <ThemeToggle />
           {signOutButton()}
         </div>
 
         <AnimatePresence>
           {open && (
-            <motion.nav
-              id="admin-menu"
-              aria-label="Admin"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: easeOut }}
-              className="mt-3 flex flex-col gap-1 border-t border-ink/10 pt-3 lg:hidden"
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: easeOut }}
+              className="absolute inset-x-0 top-full overflow-hidden border-b border-ink/10 bg-surface shadow-xl shadow-black/10 lg:hidden"
             >
-              {navLinks(() => setOpen(false))}
-              {showSignOut && (
-                <div className="mt-1 border-t border-ink/10 pt-2">{signOutButton("w-full justify-start px-4 py-2.5")}</div>
-              )}
-            </motion.nav>
+              <nav id="admin-menu" aria-label="Admin" className="flex flex-col gap-1 p-3">
+                {navLinks(() => setOpen(false))}
+                {showSignOut && (
+                  <div className="mt-1 border-t border-ink/10 pt-2">{signOutButton()}</div>
+                )}
+              </nav>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

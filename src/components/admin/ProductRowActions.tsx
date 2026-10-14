@@ -65,16 +65,16 @@ export function ProductRowActions({
     });
 
   return (
-    <div className="flex items-center justify-end gap-3">
-      {error && <span className="text-xs text-danger">{error}</span>}
-      <label className="flex items-center gap-2 text-xs text-muted">
+    <div className="flex flex-wrap items-center gap-1 sm:justify-end sm:gap-3">
+      {error && <span className="w-full text-xs text-danger sm:w-auto">{error}</span>}
+      <label className="mr-auto flex items-center gap-2 text-xs text-muted sm:mr-0">
         <Toggle
           checked={isActive}
           disabled={pending}
           label={`Show ${name} in the store`}
           onChange={(v) => run(() => setProductFlag(id, "is_active", v))}
         />
-        <span className="hidden sm:inline">{isActive ? "Live" : "Hidden"}</span>
+        {isActive ? "Live" : "Hidden"}
       </label>
       <button
         type="button"

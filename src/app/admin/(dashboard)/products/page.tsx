@@ -64,35 +64,38 @@ async function Products() {
               const stock = totalStock(p);
               const low = lowStockCount(p);
               return (
-                <li key={p.id} className="flex items-center gap-4 p-2 sm:p-3">
+                <li key={p.id} className="flex items-start gap-3 p-2 sm:items-center sm:gap-4 sm:p-3">
                   <Link href={`/admin/products/${p.id}`} className="shrink-0">
                     <ProductImage
                       src={coverPhoto(p)}
                       alt=""
                       category={p.category}
-                      sizes="56px"
-                      className="aspect-[3/4] w-14 rounded-xl"
+                      sizes="64px"
+                      className="aspect-[3/4] w-16 rounded-xl sm:w-14"
                     />
                   </Link>
-                  <div className="min-w-0 flex-1">
-                    <Link href={`/admin/products/${p.id}`} className="font-semibold hover:text-accent">
-                      {p.name}
-                    </Link>
-                    <p className="truncate text-sm text-muted">
-                      {categoryLabel(p.category)} · {formatCedi(p.price)} · /{p.slug}
-                    </p>
-                    <p className="text-xs">
-                      {stock === 0 ? (
-                        <span className="font-semibold text-danger">Sold out</span>
-                      ) : low !== null ? (
-                        <span className="font-semibold text-danger">{stock} in stock</span>
-                      ) : (
-                        <span className="text-muted">{stock} in stock</span>
-                      )}
-                      {p.images.length === 0 && <span className="ml-2 text-muted">· No photos</span>}
-                    </p>
+                  <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                    <div className="min-w-0 flex-1">
+                      <Link href={`/admin/products/${p.id}`} className="block truncate font-semibold hover:text-accent">
+                        {p.name}
+                      </Link>
+                      <p className="truncate text-sm text-muted">
+                        {categoryLabel(p.category)} · {formatCedi(p.price)}
+                        <span className="hidden sm:inline"> · /{p.slug}</span>
+                      </p>
+                      <p className="text-xs">
+                        {stock === 0 ? (
+                          <span className="font-semibold text-danger">Sold out</span>
+                        ) : low !== null ? (
+                          <span className="font-semibold text-danger">{stock} in stock</span>
+                        ) : (
+                          <span className="text-muted">{stock} in stock</span>
+                        )}
+                        {p.images.length === 0 && <span className="ml-2 text-muted">· No photos</span>}
+                      </p>
+                    </div>
+                    <ProductRowActions id={p.id} name={p.name} isActive={p.isActive} featured={p.featured} />
                   </div>
-                  <ProductRowActions id={p.id} name={p.name} isActive={p.isActive} featured={p.featured} />
                 </li>
               );
             })}
