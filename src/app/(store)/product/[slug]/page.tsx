@@ -45,14 +45,14 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
 
   return (
     <>
-      <section className="relative bg-grid pt-28 pb-6 md:pt-32 md:pb-10">
+      <section className="relative bg-grid pt-24 pb-3 md:pt-32 md:pb-8">
         <div className="container-page">
           <ProductView product={product} />
         </div>
       </section>
 
       {related.length > 0 && (
-        <section className="relative py-8 md:py-12">
+        <section className="relative py-4 md:py-8">
           <div className="container-page">
             <Reveal>
               <SectionHeading
@@ -64,7 +64,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
                 }
               />
             </Reveal>
-            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:mt-8 md:grid-cols-3 lg:grid-cols-4">
+            <ul className="mt-4 grid grid-cols-2 gap-3 sm:gap-5 md:mt-6 md:grid-cols-3 lg:grid-cols-4">
               {related.map((p) => (
                 <li key={p.id}>
                   <ProductCard product={p} />

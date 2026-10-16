@@ -56,7 +56,7 @@ export function ProductView({ product }: { product: Product }) {
   const addDisabled = !size || room === 0;
 
   return (
-    <div className="grid min-w-0 gap-3 pb-20 lg:grid-cols-[1.1fr_1fr] lg:gap-14 lg:pb-0">
+    <div className="grid min-w-0 gap-2 pb-16 lg:grid-cols-[1.1fr_1fr] lg:gap-14 lg:pb-0">
       <div className="min-w-0">
         <Gallery key={color} photos={photos} name={product.name} category={product.category} />
       </div>
@@ -221,16 +221,16 @@ export function ProductView({ product }: { product: Product }) {
           </div>
         </div>
 
-        <p className="mt-4 flex items-center gap-2 rounded-2xl bg-accent-soft px-4 py-3 text-sm lg:mt-6">
+        <p className="mt-3 flex items-center gap-2 rounded-2xl bg-accent-soft px-4 py-2.5 text-sm lg:mt-6">
           <Truck className="size-4 shrink-0 text-accent" aria-hidden="true" />
           Free delivery in Accra on orders over {formatCedi(FREE_DELIVERY_THRESHOLD)}.
         </p>
 
         {(product.description || product.details.length > 0) && (
-          <div className="mt-5 border-t border-ink/10 pt-5 lg:mt-8 lg:pt-8">
-            {product.description && <p className="text-muted">{product.description}</p>}
+          <div className="mt-3 border-t border-ink/10 pt-3 lg:mt-8 lg:pt-8">
+            {product.description && <p className="text-sm text-muted lg:text-base">{product.description}</p>}
             {product.details.length > 0 && (
-              <ul className="mt-3 flex flex-col gap-2 text-sm lg:mt-5">
+              <ul className="mt-2 flex flex-col gap-1.5 text-sm lg:mt-5 lg:gap-2">
                 {product.details.map((d) => (
                   <li key={d} className="flex items-start gap-2">
                     <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />

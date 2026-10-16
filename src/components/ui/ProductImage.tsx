@@ -15,6 +15,7 @@ export function ProductImage({
   preload = false,
   className,
   imageClassName,
+  fit = "cover",
 }: {
   src: string;
   alt: string;
@@ -24,6 +25,8 @@ export function ProductImage({
   preload?: boolean;
   className?: string;
   imageClassName?: string;
+  /** cover fills the card; contain shows the whole photo (lightbox). */
+  fit?: "cover" | "contain";
 }) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const failed = !src || failedSrc === src;
@@ -52,8 +55,8 @@ export function ProductImage({
           preload={preload}
           loading={preload ? "eager" : undefined}
           onError={() => setFailedSrc(src)}
-          // Fill the card edge-to-edge (no letterbox). Inline so a stale CSS cache can't undo it.
-          style={{ objectFit: "cover", objectPosition: "center" }}
+          // Inline so a stale CSS cache can't undo the fit.
+          style={{ objectFit: fit, objectPosition: "center" }}
           className={cn("text-transparent", imageClassName)}
         />
       )}
