@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductView } from "@/components/product/ProductView";
-import { Reveal, Section } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Section";
 import { Accent, SectionHeading } from "@/components/ui/SectionHeading";
 import { getProductBySlug, getProducts } from "@/lib/catalog";
 import { coverPhoto } from "@/lib/product";
@@ -45,32 +45,34 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
 
   return (
     <>
-      <section className="relative bg-grid pt-28 pb-16 md:pt-32">
+      <section className="relative bg-grid pt-28 pb-6 md:pt-32 md:pb-10">
         <div className="container-page">
           <ProductView product={product} />
         </div>
       </section>
 
       {related.length > 0 && (
-        <Section className="pt-4 md:pt-8">
-          <Reveal>
-            <SectionHeading
-              label="Complete the Look"
-              title={
-                <>
-                  You May Also <Accent>Like</Accent>
-                </>
-              }
-            />
-          </Reveal>
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
-            {related.map((p) => (
-              <li key={p.id}>
-                <ProductCard product={p} />
-              </li>
-            ))}
-          </ul>
-        </Section>
+        <section className="relative py-8 md:py-12">
+          <div className="container-page">
+            <Reveal>
+              <SectionHeading
+                label="Complete the Look"
+                title={
+                  <>
+                    You May Also <Accent>Like</Accent>
+                  </>
+                }
+              />
+            </Reveal>
+            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 md:mt-8 md:grid-cols-3 lg:grid-cols-4">
+              {related.map((p) => (
+                <li key={p.id}>
+                  <ProductCard product={p} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       )}
     </>
   );

@@ -52,8 +52,8 @@ export function ProductImage({
           preload={preload}
           loading={preload ? "eager" : undefined}
           onError={() => setFailedSrc(src)}
-          // Inline style so the fit can't be lost to a stale CSS cache.
-          style={{ objectFit: "contain", objectPosition: "center" }}
+          // Fill the card edge-to-edge (no letterbox). Inline so a stale CSS cache can't undo it.
+          style={{ objectFit: "cover", objectPosition: "center" }}
           className={cn("text-transparent", imageClassName)}
         />
       )}
