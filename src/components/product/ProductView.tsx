@@ -53,7 +53,7 @@ export function ProductView({ product }: { product: Product }) {
   } at ${formatCedi(product.price)}. Is it available?`;
 
   return (
-    <div className="grid min-w-0 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+    <div className="grid min-w-0 gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
       <div className="min-w-0">
         <Gallery key={color} photos={photos} name={product.name} category={product.category} />
       </div>
@@ -69,7 +69,7 @@ export function ProductView({ product }: { product: Product }) {
           </Link>
         </nav>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2">
+        <div className="mt-2 flex flex-wrap items-center gap-2 lg:mt-4">
           {soldOut ? (
             <span className="rounded-full bg-night px-3 py-1 text-xs font-medium text-white">Sold out</span>
           ) : (
@@ -80,15 +80,15 @@ export function ProductView({ product }: { product: Product }) {
             )
           )}
         </div>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">{product.name}</h1>
-        <p className="mt-3 text-3xl font-semibold text-accent">{formatCedi(product.price)}</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl lg:mt-3 lg:text-5xl">{product.name}</h1>
+        <p className="mt-1.5 text-2xl font-semibold text-accent lg:mt-3 lg:text-3xl">{formatCedi(product.price)}</p>
 
         {product.colors.length > 0 && (
-          <fieldset className="mt-8">
+          <fieldset className="mt-4 lg:mt-8">
             <legend className="text-sm font-medium">
               Colour: <span className="text-muted">{color}</span>
             </legend>
-            <div className="mt-3 flex flex-wrap gap-2.5">
+            <div className="mt-2 flex flex-wrap gap-2 lg:mt-3 lg:gap-2.5">
               {product.colors.map((c) => {
                 const out = colorStock(product, c.name) === 0;
                 const selected = c.name === color;
@@ -101,7 +101,7 @@ export function ProductView({ product }: { product: Product }) {
                     aria-label={out ? `${c.name} (sold out)` : c.name}
                     title={out ? `${c.name} (sold out)` : c.name}
                     className={cn(
-                      "relative grid size-11 place-items-center rounded-full ring-2 ring-offset-2 ring-offset-paper transition",
+                      "relative grid size-9 place-items-center rounded-full ring-2 ring-offset-2 ring-offset-paper transition lg:size-11",
                       selected ? "ring-accent" : "ring-transparent hover:ring-ink/20",
                     )}
                   >
@@ -116,14 +116,14 @@ export function ProductView({ product }: { product: Product }) {
           </fieldset>
         )}
 
-        <fieldset className="mt-8">
+        <fieldset className="mt-4 lg:mt-8">
           <div className="flex items-center justify-between gap-4">
             <legend className="text-sm font-medium">
               Size{size && <span className="text-muted">: {size}</span>}
             </legend>
             {showSizeGuide && <SizeGuide />}
           </div>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-2 flex flex-wrap gap-2 lg:mt-3">
             {product.sizes.map((s) => {
               const out = stockFor(product, color, s) === 0;
               const selected = s === size;
@@ -135,7 +135,7 @@ export function ProductView({ product }: { product: Product }) {
                   disabled={out}
                   aria-pressed={selected}
                   className={cn(
-                    "min-w-14 rounded-full border px-4 py-2.5 text-sm font-medium transition-colors",
+                    "min-w-12 rounded-full border px-3 py-2 text-sm font-medium transition-colors lg:min-w-14 lg:px-4 lg:py-2.5",
                     selected
                       ? "border-night bg-night text-white dark:border-accent dark:bg-accent"
                       : "border-ink/15 bg-surface hover:border-ink/40",
@@ -147,7 +147,7 @@ export function ProductView({ product }: { product: Product }) {
               );
             })}
           </div>
-          <p className="mt-3 min-h-5 text-sm" aria-live="polite">
+          <p className="mt-2 min-h-5 text-sm lg:mt-3" aria-live="polite">
             {soldOut ? (
               <span className="text-muted">This piece is sold out. Message us to ask about a restock.</span>
             ) : !size ? (

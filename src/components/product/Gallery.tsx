@@ -13,7 +13,7 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
   const current = photos[index]?.url ?? "";
 
   return (
-    <div className="flex min-w-0 w-full flex-col gap-3 md:flex-row-reverse md:items-start">
+    <div className="flex min-w-0 w-full flex-col gap-2 md:flex-row-reverse md:items-start md:gap-3">
       <div className="relative min-w-0 w-full md:flex-1">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
@@ -29,7 +29,8 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
               category={category}
               sizes="(min-width: 1024px) 45vw, 100vw"
               preload={index === 0}
-              className="aspect-[3/4] rounded-4xl"
+              /* Shorter on phones so name / price / size fit in the first viewport. */
+              className="aspect-square max-h-[38svh] w-full rounded-3xl md:aspect-[3/4] md:max-h-none md:rounded-4xl"
             />
           </motion.div>
         </AnimatePresence>
@@ -48,7 +49,7 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
                 aria-label={`Show photo ${i + 1}`}
                 aria-current={i === index || undefined}
                 className={cn(
-                  "block w-16 overflow-hidden rounded-2xl ring-2 transition md:w-20",
+                  "block w-12 overflow-hidden rounded-xl ring-2 transition sm:w-14 md:w-20 md:rounded-2xl",
                   i === index ? "ring-accent" : "ring-transparent opacity-70 hover:opacity-100",
                 )}
               >
