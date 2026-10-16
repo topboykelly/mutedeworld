@@ -53,8 +53,10 @@ export function ProductView({ product }: { product: Product }) {
   } at ${formatCedi(product.price)}. Is it available?`;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
-      <Gallery key={color} photos={photos} name={product.name} category={product.category} />
+    <div className="grid min-w-0 gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+      <div className="min-w-0">
+        <Gallery key={color} photos={photos} name={product.name} category={product.category} />
+      </div>
 
       <div className="lg:pt-4">
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-muted">
