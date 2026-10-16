@@ -1,11 +1,16 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { whatsappUrl } from "@/lib/contact";
 import { WhatsappIcon } from "./ui/SocialIcons";
 import { easeOut } from "./ui/Section";
 
 export function WhatsAppButton() {
+  const pathname = usePathname();
+  // Product page has its own sticky WhatsApp + cart bar on mobile.
+  if (pathname?.startsWith("/product/")) return null;
+
   return (
     <motion.a
       href={whatsappUrl()}

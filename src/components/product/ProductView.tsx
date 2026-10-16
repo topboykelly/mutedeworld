@@ -52,14 +52,17 @@ export function ProductView({ product }: { product: Product }) {
     color || size ? ` (${variantLabel(color, size)})` : ""
   } at ${formatCedi(product.price)}. Is it available?`;
 
+  const addLabel = size && room === 0 ? "All available are in your cart" : "Add to Cart";
+  const addDisabled = !size || room === 0;
+
   return (
-    <div className="grid min-w-0 gap-5 lg:grid-cols-[1.1fr_1fr] lg:gap-14">
+    <div className="grid min-w-0 gap-3 pb-24 lg:grid-cols-[1.1fr_1fr] lg:gap-14 lg:pb-0">
       <div className="min-w-0">
         <Gallery key={color} photos={photos} name={product.name} category={product.category} />
       </div>
 
       <div className="lg:pt-4">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-sm text-muted">
+        <nav aria-label="Breadcrumb" className="hidden items-center gap-1.5 text-sm text-muted lg:flex">
           <Link href="/" className="hover:text-accent">
             Home
           </Link>
@@ -69,7 +72,7 @@ export function ProductView({ product }: { product: Product }) {
           </Link>
         </nav>
 
-        <div className="mt-2 flex flex-wrap items-center gap-2 lg:mt-4">
+        <div className="flex flex-wrap items-center gap-2 lg:mt-4">
           {soldOut ? (
             <span className="rounded-full bg-night px-3 py-1 text-xs font-medium text-white">Sold out</span>
           ) : (
@@ -80,15 +83,15 @@ export function ProductView({ product }: { product: Product }) {
             )
           )}
         </div>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl lg:mt-3 lg:text-5xl">{product.name}</h1>
-        <p className="mt-1.5 text-2xl font-semibold text-accent lg:mt-3 lg:text-3xl">{formatCedi(product.price)}</p>
+        <h1 className="mt-1.5 text-2xl font-semibold tracking-tight sm:text-3xl lg:mt-3 lg:text-5xl">{product.name}</h1>
+        <p className="mt-1 text-xl font-semibold text-accent lg:mt-3 lg:text-3xl">{formatCedi(product.price)}</p>
 
         {product.colors.length > 0 && (
-          <fieldset className="mt-4 lg:mt-8">
+          <fieldset className="mt-3 lg:mt-8">
             <legend className="text-sm font-medium">
               Colour: <span className="text-muted">{color}</span>
             </legend>
-            <div className="mt-2 flex flex-wrap gap-2 lg:mt-3 lg:gap-2.5">
+            <div className="mt-1.5 flex flex-wrap gap-2 lg:mt-3 lg:gap-2.5">
               {product.colors.map((c) => {
                 const out = colorStock(product, c.name) === 0;
                 const selected = c.name === color;
@@ -116,14 +119,14 @@ export function ProductView({ product }: { product: Product }) {
           </fieldset>
         )}
 
-        <fieldset className="mt-4 lg:mt-8">
+        <fieldset className="mt-3 lg:mt-8">
           <div className="flex items-center justify-between gap-4">
             <legend className="text-sm font-medium">
               Size{size && <span className="text-muted">: {size}</span>}
             </legend>
             {showSizeGuide && <SizeGuide />}
           </div>
-          <div className="mt-2 flex flex-wrap gap-2 lg:mt-3">
+          <div className="mt-1.5 flex flex-wrap gap-2 lg:mt-3">
             {product.sizes.map((s) => {
               const out = stockFor(product, color, s) === 0;
               const selected = s === size;
@@ -163,7 +166,7 @@ export function ProductView({ product }: { product: Product }) {
         </fieldset>
 
         {!soldOut && (
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-5 hidden flex-wrap items-center gap-3 lg:mt-6 lg:flex">
             <QtyStepper
               value={qty}
               max={Math.max(1, room)}
@@ -171,14 +174,9 @@ export function ProductView({ product }: { product: Product }) {
               label={product.name}
               className="bg-surface p-1.5"
             />
-            <PillButton
-              onClick={add}
-              disabled={!size || room === 0}
-              variant="dark"
-              className="flex-1"
-            >
+            <PillButton onClick={add} disabled={addDisabled} variant="dark" className="flex-1">
               <ShoppingBag className="size-4" aria-hidden="true" />
-              {size && room === 0 ? "All available are in your cart" : "Add to Cart"}
+              {addLabel}
             </PillButton>
           </div>
         )}
@@ -187,11 +185,41 @@ export function ProductView({ product }: { product: Product }) {
           href={whatsappUrl(askText)}
           target="_blank"
           rel="noreferrer"
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-3 text-sm font-medium transition-colors hover:border-[#25d366] hover:text-[#1da851]"
+          className="mt-3 hidden w-full items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-3 text-sm font-medium transition-colors hover:border-[#25d366] hover:text-[#1da851] lg:flex"
         >
           <WhatsappIcon className="size-4" />
           Ask about this on WhatsApp
         </a>
+
+        {/* Mobile: sticky actions always in reach, like common shop apps. */}
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-surface/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden">
+          <div className="mx-auto flex max-w-lg items-center gap-2">
+            <a
+              href={whatsappUrl(askText)}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Ask about this on WhatsApp"
+              className="grid size-12 shrink-0 place-items-center rounded-2xl border border-ink/15 text-[#1da851] transition-colors hover:border-[#25d366]"
+            >
+              <WhatsappIcon className="size-5" />
+            </a>
+            {!soldOut ? (
+              <PillButton onClick={add} disabled={addDisabled} variant="dark" className="min-h-12 flex-1 rounded-2xl">
+                <ShoppingBag className="size-4" aria-hidden="true" />
+                {addLabel}
+              </PillButton>
+            ) : (
+              <a
+                href={whatsappUrl(askText)}
+                target="_blank"
+                rel="noreferrer"
+                className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-2xl bg-night px-5 text-sm font-medium text-white"
+              >
+                Ask about restock
+              </a>
+            )}
+          </div>
+        </div>
 
         <p className="mt-6 flex items-center gap-2 rounded-2xl bg-accent-soft px-4 py-3 text-sm">
           <Truck className="size-4 shrink-0 text-accent" aria-hidden="true" />
