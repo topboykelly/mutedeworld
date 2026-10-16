@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import type { Category } from "@/data/store";
@@ -12,6 +12,7 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
   const [index, setIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
   const scrollerRef = useRef<HTMLUListElement>(null);
+  const viewerRef = useRef<HTMLUListElement>(null);
   const current = photos[index]?.url ?? "";
 
   useEffect(() => {
@@ -33,12 +34,56 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
     scrollerRef.current?.scrollTo({ left: 0 });
   }, [photos]);
 
+  const scrollViewerTo = (i: number, smooth = true) => {
+    const el = viewerRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: smooth ? "smooth" : "auto" });
+  };
+
+  // Swipe in the enlarged viewer updates the selected photo.
+  useEffect(() => {
+    const el = viewerRef.current;
+    if (!viewerOpen || !el) return;
+    const onScroll = () => {
+      const i = Math.round(el.scrollLeft / Math.max(el.clientWidth, 1));
+      setIndex(Math.max(0, Math.min(photos.length - 1, i)));
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [viewerOpen, photos.length]);
+
+  // Land on the tapped photo when the viewer opens.
+  useLayoutEffect(() => {
+    if (!viewerOpen) return;
+    const el = viewerRef.current;
+    if (!el) return;
+    const go = () => {
+      el.scrollLeft = index * el.clientWidth;
+    };
+    go();
+    requestAnimationFrame(go);
+    // Only when opening — index is already set by openViewer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewerOpen]);
+
   useEffect(() => {
     if (!viewerOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setViewerOpen(false);
-      if (e.key === "ArrowRight") setIndex((i) => Math.min(photos.length - 1, i + 1));
-      if (e.key === "ArrowLeft") setIndex((i) => Math.max(0, i - 1));
+      if (e.key === "ArrowRight") {
+        setIndex((i) => {
+          const next = Math.min(photos.length - 1, i + 1);
+          scrollViewerTo(next);
+          return next;
+        });
+      }
+      if (e.key === "ArrowLeft") {
+        setIndex((i) => {
+          const next = Math.max(0, i - 1);
+          scrollViewerTo(next);
+          return next;
+        });
+      }
     };
     const { overflow } = document.body.style;
     document.body.style.overflow = "hidden";
@@ -52,6 +97,11 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
   const openViewer = (i: number) => {
     setIndex(i);
     setViewerOpen(true);
+  };
+
+  const pickViewerPhoto = (i: number) => {
+    setIndex(i);
+    scrollViewerTo(i);
   };
 
   return (
@@ -167,22 +217,32 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
               </button>
             </div>
 
-            <div className="relative flex min-h-0 flex-1 items-center justify-center px-3">
-              <div className="relative h-[min(72svh,100%)] w-full max-w-3xl">
-                <ProductImage
-                  src={photos[index]?.url ?? ""}
-                  alt={`${name} photo ${index + 1}`}
-                  category={category}
-                  sizes="100vw"
-                  fit="contain"
-                  className="h-full w-full rounded-2xl bg-paper"
-                />
-                {photos.length > 1 && (
-                  <p className="absolute right-3 bottom-3 rounded-full bg-night/70 px-2.5 py-1 text-xs font-medium text-white">
-                    {index + 1}/{photos.length}
-                  </p>
-                )}
-              </div>
+            <div className="relative min-h-0 flex-1">
+              <ul
+                ref={viewerRef}
+                className="no-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto"
+                aria-label={`${name} enlarged photos`}
+              >
+                {photos.map((photo, i) => (
+                  <li key={photo.url} className="flex h-full w-full shrink-0 snap-center items-center justify-center px-3">
+                    <div className="relative h-[min(72svh,100%)] w-full max-w-3xl">
+                      <ProductImage
+                        src={photo.url}
+                        alt={`${name} photo ${i + 1}`}
+                        category={category}
+                        sizes="100vw"
+                        fit="contain"
+                        className="h-full w-full rounded-2xl bg-paper"
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {photos.length > 1 && (
+                <p className="pointer-events-none absolute right-4 bottom-2 rounded-full bg-night/70 px-2.5 py-1 text-xs font-medium text-white">
+                  {index + 1}/{photos.length}
+                </p>
+              )}
             </div>
 
             {photos.length > 1 && (
@@ -191,7 +251,7 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
                   <li key={photo.url} className="shrink-0">
                     <button
                       type="button"
-                      onClick={() => setIndex(i)}
+                      onClick={() => pickViewerPhoto(i)}
                       aria-label={`Show photo ${i + 1}`}
                       aria-current={i === index || undefined}
                       className={cn(
