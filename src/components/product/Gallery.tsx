@@ -13,8 +13,8 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
   const current = photos[index]?.url ?? "";
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row-reverse">
-      <div className="relative flex-1">
+    <div className="flex flex-col gap-3 md:flex-row-reverse md:items-start">
+      <div className="relative min-w-0 w-full md:flex-1">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={current}
@@ -36,14 +36,17 @@ export function Gallery({ photos, name, category }: { photos: ProductPhoto[]; na
       </div>
 
       {photos.length > 1 && (
-        <ul className="no-scrollbar flex gap-2 overflow-x-auto md:w-20 md:flex-col" aria-label="Photos">
+        <ul
+          className="no-scrollbar flex w-full max-w-full gap-2 overflow-x-auto md:sticky md:top-28 md:w-20 md:max-h-[min(36rem,calc(100vh-8rem))] md:flex-col md:overflow-x-hidden md:overflow-y-auto"
+          aria-label="Photos"
+        >
           {photos.map((photo, i) => (
             <li key={photo.url} className="shrink-0">
               <button
                 type="button"
                 onClick={() => setIndex(i)}
                 aria-label={`Show photo ${i + 1}`}
-                aria-current={i === index}
+                aria-current={i === index || undefined}
                 className={cn(
                   "block w-16 overflow-hidden rounded-2xl ring-2 transition md:w-20",
                   i === index ? "ring-accent" : "ring-transparent opacity-70 hover:opacity-100",

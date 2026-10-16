@@ -52,7 +52,9 @@ export function ProductImage({
           preload={preload}
           loading={preload ? "eager" : undefined}
           onError={() => setFailedSrc(src)}
-          className={cn("object-cover text-transparent", imageClassName)}
+          // Inline style so the fit can't be lost to a stale CSS cache.
+          style={{ objectFit: "contain", objectPosition: "center" }}
+          className={cn("text-transparent", imageClassName)}
         />
       )}
     </div>
